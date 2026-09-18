@@ -32,8 +32,7 @@ function initMap() {
 
 async function loadData() {
     try {
-        const response = await fetch("/api/wisata");
-
+        const response = await fetch("./data/Data Wisata Kulon Progo.csv");
         if (!response.ok) {
             throw new Error("Server tidak dapat membaca CSV.");
         }
