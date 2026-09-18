@@ -32,7 +32,7 @@ function initMap() {
 
 async function loadData() {
     try {
-        const response = await fetch("./Jelajah-In-Progo-WebGIS/data/Data Wisata Kulon Progo.csv");
+        const response = await fetch("./data/Data%20Wisata%20Kulon%20Progo.csv");
 
         if (!response.ok) {
             throw new Error("File CSV tidak ditemukan.");
