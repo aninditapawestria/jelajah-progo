@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Jelajah-In Progo | WebGIS Wisata</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        crossorigin=""
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+<header class="hero" id="beranda">
+    <nav class="top-nav">
+        <a href="#beranda" class="logo">
+            <span class="logo-mark"><i class="fa-solid fa-compass"></i></span>
+            <span>Jelajah-In Progo</span>
+        </a>
+
+        <div class="nav-links">
+            <a href="#discover">Beranda</a>
+            <a href="#peta">Peta</a>
+            <a href="#destinasi">Destinasi</a>
+            <a href="#tentang">Tentang Kami</a>
+        </div>
+
+        <a href="#peta" class="nav-button">
+            Cari destinasi <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </nav>
+
+    <div class="hero-content">
+        <p class="eyebrow">WEBGIS WISATA KULON PROGO</p>
+        <h1>Jelajah-In Progo</h1>
+        <p>
+            Temukan destinasi, budaya, dan panorama Kulon Progo
+            melalui satu peta interaktif.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#peta" class="primary-button">
+                <i class="fa-solid fa-map-location-dot"></i>
+                Jelajahi Peta
+            </a>
+            <a href="#discover" class="ghost-button">
+                Lihat destinasi
+            </a>
+        </div>
+    </div>
+
+    <div class="hero-scroll">
+        <span>Scroll untuk menjelajah</span>
+        <i class="fa-solid fa-arrow-down"></i>
+    </div>
+</header>
+
+<!-- ======================================================
+     MAIN
+====================================================== -->
+<main>
+
+    <!-- DISCOVER -->
+    <section class="section discover" id="discover">
+        <div class="section-heading">
+            <div>
+                <span class="section-kicker">Discover</span>
+                <h2>Kenali Kulon Progo<br>dari peta dan data.</h2>
+            </div>
+            <p>
+                Informasi destinasi di halaman ini bersumber
+                langsung dari data CSV yang disediakan.
+            </p>
+        </div>
+
+        <div class="discover-grid">
+
+            <article class="stats-card">
+                <div class="card-label">
+                    <span>Statistics</span>
+                    <i class="fa-solid fa-chart-simple"></i>
+                </div>
+
+                <div class="big-number" id="statTotal">0</div>
+                <div class="big-label">lokasi wisata</div>
+
+                <div class="mini-stats">
+                    <div>
+                        <strong id="statKecamatan">0</strong>
+                        <span>Kecamatan</span>
+                    </div>
+                    <div>
+                        <strong id="statKategori">0</strong>
+                        <span>Kategori</span>
+                    </div>
+                    <div>
+                        <strong id="statKoordinat">0</strong>
+                        <span>Titik peta</span>
+                    </div>
+                </div>
+            </article>
+
+            <article class="category-card">
+                <div class="card-label">
+                    <span>Kategori Wisata</span>
+                    <span class="muted">From user data</span>
+                </div>
+
+                <div id="categoryOverview" class="category-list">
+                    <p class="muted">Memuat kategori...</p>
+                </div>
+
+                <a href="#peta" class="text-link">
+                    Lihat semua di peta
+                    <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </article>
+
+        </div>
+
+        <div class="section-subheading">
+            <div>
+                <span class="section-kicker">Data wisata</span>
+                <h3>Lokasi yang tersedia</h3>
+            </div>
+            <span class="data-count" id="tableCount">0 data</span>
+        </div>
+
+        <div class="table-card">
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Lokasi</th>
+                            <th>Kategori</th>
+                            <th>Wilayah</th>
+                            <th>Jam Operasional</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="locationTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAP -->
+    <section class="map-section" id="peta">
+        <div class="map-header">
+            <div>
+                <span class="section-kicker">Map</span>
+                <h2>Jelajahi lokasi wisata</h2>
+                <p>Pilih marker untuk melihat informasi destinasi.</p>
+            </div>
+
+            <div class="map-tools">
+                <div class="map-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input
+                        id="searchInput"
+                        type="search"
+                        placeholder="Cari destinasi..."
+                    >
+                    <button id="clearSearch" title="Hapus">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <button class="locate-button" id="locateButton" title="Gunakan lokasi saya">
+                    <i class="fa-solid fa-location-crosshairs"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="map-layout">
+
+            <aside class="map-sidebar">
+
+                <div class="filter-title">
+                    <div>
+                        <span>Filter</span>
+                        <strong>Kategori Wisata</strong>
+                    </div>
+                    <button id="resetFilter">Reset</button>
+                </div>
+
+                <div id="mapFilters" class="map-filters"></div>
+
+                <div class="selected-place" id="selectedPlace">
+                    <div class="empty-selected">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <p>Pilih salah satu marker di peta.</p>
+                    </div>
+                </div>
+
+            </aside>
+
+            <div class="map-container">
+                <div id="map"></div>
+
+                <div class="map-badge">
+                    <i class="fa-solid fa-circle"></i>
+                    <span id="visibleCount">0 lokasi</span>
+                </div>
+
+                <div id="mapResults" class="map-results hidden"></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- DESTINASI -->
+    <section class="section destination-section" id="destinasi">
+        <div class="section-heading">
+            <div>
+                <span class="section-kicker">Destinasi</span>
+                <h2>Detail destinasi pilihan</h2>
+            </div>
+            <p>
+                Detail berikut menggunakan atribut yang tersedia
+                pada CSV tanpa menambahkan data baru.
+            </p>
+        </div>
+
+        <article class="destination-detail" id="destinationDetail">
+            <div class="detail-visual">
+                <div class="visual-overlay">
+                    <span class="visual-tag">DATA DESTINASI</span>
+                    <h3 id="detailName">Memuat...</h3>
+                    <p id="detailArea">-</p>
+                </div>
+            </div>
+
+            <div class="detail-content">
+                <span class="category-pill" id="detailCategory">-</span>
+                <p class="detail-description" id="detailDescription">Memuat...</p>
+
+                <div class="detail-grid">
+                    <div class="detail-item">
+                        <i class="fa-regular fa-clock"></i>
+                        <div>
+                            <span>Jam operasional</span>
+                            <strong id="detailHours">-</strong>
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <i class="fa-solid fa-ticket"></i>
+                        <div>
+                            <span>Tiket masuk</span>
+                            <strong id="detailTicket">-</strong>
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <div>
+                            <span>Koordinat</span>
+                            <strong id="detailCoordinates">-</strong>
+                        </div>
+                    </div>
+
+                    <div class="detail-item">
+                        <i class="fa-solid fa-hashtag"></i>
+                        <div>
+                            <span>Media sosial</span>
+                            <strong id="detailSocial">-</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="facility-row">
+                    <span><i class="fa-solid fa-restroom"></i> Toilet <b id="detailToilet">-</b></span>
+                    <span><i class="fa-solid fa-mosque"></i> Mushola <b id="detailMushola">-</b></span>
+                    <span><i class="fa-solid fa-utensils"></i> Tempat makan <b id="detailFood">-</b></span>
+                </div>
+
+                <div class="detail-actions">
+                    <a href="#peta" class="primary-button" id="detailMapButton">
+                        <i class="fa-solid fa-map"></i>
+                        Lihat di Peta
+                    </a>
+
+                    <a href="#" class="secondary-button" id="routeButton" target="_blank" rel="noopener">
+                        <i class="fa-solid fa-route"></i>
+                        Lihat Rute
+                    </a>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- TENTANG -->
+    <section class="about-section" id="tentang">
+        <div class="about-inner">
+            <div>
+                <span class="section-kicker">Tentang Kami</span>
+                <h2>Jelajah-In Progo</h2>
+            </div>
+            <p>
+                WebGIS ini dibuat untuk membantu pengguna menjelajahi
+                lokasi wisata berdasarkan data spasial dan atribut
+                yang tersedia. Peta menggunakan Leaflet dan data
+                dibaca dari file CSV secara lokal.
+            </p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <div>
+        <strong>Jelajah-In Progo</strong>
+        <span>WebGIS Wisata Kulon Progo</span>
+    </div>
+    <span>© 2026</span>
+</footer>
+
+<script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin=""
+></script>
+
+<script src="script.js"></script>
+</body>
+</html>
