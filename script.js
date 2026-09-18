@@ -32,17 +32,30 @@ function initMap() {
 
 async function loadData() {
     try {
-        const response = await fetch("./data/Data%20Wisata%20Kulon%20Progo.csv");
+        const csvUrl = "./data/Data%20Wisata%20Kulon%20Progo.csv";
+
+        console.log("Mencoba mengambil CSV:", csvUrl);
+
+        const response = await fetch(csvUrl);
 
         if (!response.ok) {
-            throw new Error("File CSV tidak ditemukan.");
+            throw new Error(
+                `CSV tidak ditemukan. Status: ${response.status}`
+            );
         }
 
         const csvText = await response.text();
 
+        console.log("CSV berhasil dibaca:");
+        console.log(csvText.substring(0, 300));
+
         allData = parseCSV(csvText);
+
+        console.log("Jumlah data:", allData.length);
+        console.log(allData);
+
         if (!allData.length) {
-            throw new Error("Tidak ada data yang dapat dipetakan.");
+            throw new Error("CSV terbaca tetapi tidak mempunyai data.");
         }
 
         updateStatistics();
