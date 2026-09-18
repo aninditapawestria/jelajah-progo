@@ -32,13 +32,15 @@ function initMap() {
 
 async function loadData() {
     try {
-        const response = await fetch("./Jelajah-In-Progo-WebGIS/data/Data Wisata Kulon Progo.csv");
+        const response = await fetch("./data/Data Wisata Kulon Progo.csv");
+
         if (!response.ok) {
-            throw new Error("Server tidak dapat membaca CSV.");
+            throw new Error("File CSV tidak ditemukan.");
         }
 
-        allData = await response.json();
+        const csvText = await response.text();
 
+        allData = parseCSV(csvText);
         if (!allData.length) {
             throw new Error("Tidak ada data yang dapat dipetakan.");
         }
@@ -62,7 +64,71 @@ async function loadData() {
         `;
     }
 }
+function parseCSV(text) {
+    const rows = [];
+    let row = [];
+    let value = "";
+    let insideQuotes = false;
 
+    for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        const nextChar = text[i + 1];
+
+        if (char === '"') {
+            if (insideQuotes && nextChar === '"') {
+                value += '"';
+                i++;
+            } else {
+                insideQuotes = !insideQuotes;
+            }
+        } else if (char === "," && !insideQuotes) {
+            row.push(value.trim());
+            value = "";
+        } else if ((char === "\n" || char === "\r") && !insideQuotes) {
+            if (char === "\r" && nextChar === "\n") {
+                i++;
+            }
+
+            row.push(value.trim());
+            value = "";
+
+            if (row.some(cell => cell !== "")) {
+                rows.push(row);
+            }
+
+            row = [];
+        } else {
+            value += char;
+        }
+    }
+
+    // Menambahkan baris terakhir
+    if (value !== "" || row.length > 0) {
+        row.push(value.trim());
+
+        if (row.some(cell => cell !== "")) {
+            rows.push(row);
+        }
+    }
+
+    if (rows.length < 2) {
+        return [];
+    }
+
+    const headers = rows[0].map(header =>
+        header.replace(/^\uFEFF/, "").trim()
+    );
+
+    return rows.slice(1).map(row => {
+        const item = {};
+
+        headers.forEach((header, index) => {
+            item[header] = row[index] ?? "";
+        });
+
+        return item;
+    });
+}
 function setupEvents() {
     const search = document.getElementById("searchInput");
     const clear = document.getElementById("clearSearch");
