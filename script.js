@@ -32,7 +32,7 @@ function initMap() {
 
 async function loadData() {
     try {
-        const csvUrl = "./Data%20Wisata%20Kulon%20Progo.csv";
+        const csvUrl = "https://raw.githubusercontent.com/aninditapawestria/jelajah-progo/main/Data%20Wisata%20Kulon%20Progo.csv";
         
         console.log("Mencoba mengambil CSV:", csvUrl);
 
