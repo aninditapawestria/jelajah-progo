@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dokumentasi teknis WebGIS Jelajah-In Progo.">
+  <title>Dokumentasi — Jelajah-In Progo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button class="mobile-menu" id="menuToggle" aria-label="Buka navigasi" aria-expanded="false">☰</button>
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#overview"><span class="brand-mark">J</span><span><b>Jelajah-In Progo</b><small>Dokumentasi teknis</small></span></a>
+    <label class="nav-label">PANDUAN</label>
+    <nav id="sideNav">
+      <a href="#overview" class="nav-link active">01 <span>Overview</span></a>
+      <a href="#getting-started" class="nav-link">02 <span>Getting Started</span></a>
+      <a href="#struktur" class="nav-link">03 <span>Struktur proyek</span></a>
+      <a href="#kode" class="nav-link">04 <span>HTML, CSS & JavaScript</span></a>
+      <a href="#data" class="nav-link">05 <span>Sumber data CSV</span></a>
+      <a href="#fitur" class="nav-link">06 <span>Fitur aplikasi</span></a>
+      <a href="#alur" class="nav-link">07 <span>Alur pemrosesan data</span></a>
+      <a href="#troubleshooting" class="nav-link">08 <span>Troubleshooting</span></a>
+      <a href="#deployment" class="nav-link">09 <span>Deployment</span></a>
+    </nav>
+    <div class="sidebar-bottom"><span class="status-dot"></span> Dokumentasi berbasis kode sumber<br><small>HTML · CSS · JavaScript</small></div>
+  </aside>
+  <main class="main">
+    <header class="topbar"><div class="breadcrumbs">Dokumentasi <span>/</span> <b id="crumb">Overview</b></div><a class="source-link" href="https://github.com/aninditapawestria/jelajah-progo" target="_blank" rel="noopener">Lihat repository ↗</a></header>
+    <article class="content">
+      <div class="eyebrow"><span class="eyebrow-dot"></span> WEBGIS · DOKUMENTASI TEKNIS</div>
+      <section id="overview" class="doc-section">
+        <h1>Jelajah-In Progo</h1>
+        <p class="lead">Dokumentasi teknis untuk memahami struktur, data, fitur, cara menjalankan, dan memublikasikan WebGIS wisata Kulon Progo.</p>
+        <div class="callout info"><b>Catatan penting tentang implementasi</b><p>Kode <code>script.js</code> yang diperiksa memuat data melalui <code>fetch("/api/wisata")</code> dan mengharapkan respons JSON. CSV tersedia di folder <code>data/</code>, tetapi kode yang diperiksa tidak membaca CSV secara langsung. Endpoint API harus disediakan oleh server agar data muncul; hosting statis saja tidak membuat endpoint ini otomatis.</p></div>
+        <div class="cards">
+          <div class="mini-card"><span class="card-icon">⌖</span><b>Peta interaktif</b><p>Leaflet dengan tile OpenStreetMap, marker, popup, dan zoom otomatis.</p></div>
+          <div class="mini-card"><span class="card-icon">⌕</span><b>Temukan lokasi</b><p>Pencarian teks, filter kategori, dan akses lokasi pengguna melalui browser.</p></div>
+          <div class="mini-card"><span class="card-icon">▤</span><b>Data CSV</b><p>Atribut destinasi menjadi sumber informasi tabel, statistik, dan detail.</p></div>
+        </div>
+        <h2>Tujuan aplikasi</h2><p>WebGIS ini menyajikan lokasi wisata melalui peta dan atribut destinasi. Antarmuka utama memiliki ringkasan statistik, daftar lokasi, peta, filter, kartu destinasi terpilih, detail destinasi, serta tautan rute Google Maps.</p>
+        <h2>Teknologi yang terlihat di kode</h2>
+        <div class="table-wrap"><table><thead><tr><th>Teknologi</th><th>Peran</th><th>Bukti implementasi</th></tr></thead><tbody>
+          <tr><td>HTML5</td><td>Struktur halaman dan elemen antarmuka</td><td><code>index.html</code></td></tr>
+          <tr><td>CSS</td><td>Layout, warna, komponen, breakpoint responsif</td><td><code>style.css</code></td></tr>
+          <tr><td>JavaScript</td><td>Pemuatan data dan interaksi antarmuka</td><td><code>script.js</code></td></tr>
+          <tr><td>Leaflet 1.9.4</td><td>Peta, tile layer, marker, popup</td><td>CDN di HTML</td></tr>
+          <tr><td>OpenStreetMap</td><td>Tile dasar peta</td><td><code>tile.openstreetmap.org</code></td></tr>
+          <tr><td>Font Awesome 6.5.2</td><td>Ikon antarmuka</td><td>CDN di HTML</td></tr>
+        </tbody></table></div>
+      </section>
+      <section id="getting-started" class="doc-section">
+        <h2>Getting Started</h2><p>Pastikan struktur folder tetap dipertahankan, termasuk nama file CSV yang mengandung spasi. Untuk pengembangan lokal, gunakan server HTTP, bukan mengandalkan pembukaan file HTML langsung.</p>
+        <h3>1. Ambil kode sumber</h3><pre><code>git clone https://github.com/aninditapawestria/jelajah-progo.git
+cd jelajah-progo/Jelajah-In-Progo-WebGIS</code><button class="copy-btn">Salin</button></pre>
+        <h3>2. Jalankan server lokal</h3><p>Jika sudah ada backend yang menyediakan endpoint <code>/api/wisata</code>, jalankan backend tersebut sesuai konfigurasi proyek. Kode backend atau instruksi menjalankannya tidak dapat dipastikan dari tiga file frontend yang diperiksa.</p>
+        <p>Untuk hanya melihat layout HTML, buka folder dengan VS Code lalu gunakan ekstensi Live Server. Namun, tanpa API yang sesuai, data tabel/peta tidak akan termuat meskipun halaman terbuka.</p>
+        <pre><code># Contoh server statis Python untuk melihat tampilan saja
+python -m http.server 8000
+# Buka http://localhost:8000</code><button class="copy-btn">Salin</button></pre>
+        <div class="callout warning"><b>Server statis bukan pengganti API</b><p>Contoh Python di atas hanya melayani file. Ia tidak mengubah CSV menjadi JSON dan tidak membuat rute <code>/api/wisata</code>. Gunakan backend yang sudah ada atau ubah mekanisme pemuatan data secara sengaja setelah memeriksa kebutuhan aplikasi.</p></div>
+      </section>
+      <section id="struktur" class="doc-section">
+        <h2>Struktur proyek</h2><p>Berikut file yang dapat diverifikasi dari jalur dan kode yang diperiksa. Dokumentasi ini ditempatkan terpisah agar tidak menimpa aplikasi.</p>
+        <pre><code>jelajah-progo/
+└── Jelajah-In-Progo-WebGIS/
+    ├── index.html
+    ├── style.css
+    ├── script.js
+    └── data/
+        └── Data Wisata Kulon Progo.csv
+└── docs-site/
+    ├── index.html
+    ├── style.css
+    └── script.js</code><button class="copy-btn">Salin</button></pre>
+        <div class="table-wrap"><table><thead><tr><th>File/folder</th><th>Fungsi</th></tr></thead><tbody>
+          <tr><td><code>index.html</code></td><td>Markup halaman utama, elemen statistik, tabel, peta, detail, dan pemanggilan library eksternal.</td></tr>
+          <tr><td><code>style.css</code></td><td>Variabel tema, gaya komponen, layout peta dan detail, serta media query responsif.</td></tr>
+          <tr><td><code>script.js</code></td><td>Inisialisasi Leaflet, permintaan data API, render marker/tabel/statistik, pencarian, filter, dan detail.</td></tr>
+          <tr><td><code>data/Data Wisata Kulon Progo.csv</code></td><td>Data tabular lokasi dan atribut wisata. File memiliki nama dengan spasi.</td></tr>
+          <tr><td><code>docs-site/</code></td><td>Folder dokumentasi yang ditambahkan; tidak mengubah file aplikasi utama.</td></tr>
+        </tbody></table></div>
+      </section>
+      <section id="kode" class="doc-section">
+        <h2>Memahami kode</h2>
+        <h3>HTML — struktur halaman</h3><p><code>index.html</code> memuat bagian hero/navigasi, discover dan statistik, tabel lokasi, area peta, panel destinasi terpilih, detail destinasi, bagian tentang, dan footer. ID seperti <code>map</code>, <code>locationTable</code>, serta <code>searchInput</code> menjadi titik kait JavaScript.</p>
+        <pre><code>&lt;!-- Elemen peta yang dipakai Leaflet --&gt;
+&lt;div id="map"&gt;&lt;/div&gt;
+
+&lt;!-- File aplikasi --&gt;
+&lt;script src="script.js"&gt;&lt;/script&gt;</code><button class="copy-btn">Salin</button></pre>
+        <h3>CSS — gaya dan responsivitas</h3><p><code>style.css</code> memakai CSS custom properties untuk warna, radius, dan bayangan. Breakpoint pada 950px, 720px, dan 500px mengubah navigasi, grid, panel peta, serta tombol detail untuk layar yang lebih kecil.</p>
+        <pre><code>@media (max-width: 720px) {
+  .map-layout {
+    height: auto;
+    grid-template-columns: 1fr;
+  }
+  .map-container { height: 560px; }
+}</code><button class="copy-btn">Salin</button></pre>
+        <h3>JavaScript — siklus aplikasi</h3><p>Variabel global <code>map</code>, <code>allData</code>, <code>markers</code>, <code>activeCategory</code>, dan <code>selectedData</code> menyimpan keadaan aplikasi. Setelah DOM siap, aplikasi menginisialisasi peta, memuat data, lalu memasang event handler.</p>
+        <pre><code>document.addEventListener("DOMContentLoaded", () =&gt; {
+  initMap();
+  loadData();
+  setupEvents();
+});</code><button class="copy-btn">Salin</button></pre>
+        <p>Fungsi penting lain: <code>updateStatistics()</code>, <code>renderCategoryOverview()</code>, <code>renderFilters()</code>, <code>renderTable()</code>, <code>renderMarkers()</code>, <code>applyFilters()</code>, <code>selectDestination()</code>, <code>normalizeCategory()</code>, <code>markerColor()</code>, dan <code>escapeHtml()</code>.</p>
+      </section>
+      <section id="data" class="doc-section">
+        <h2>Sumber data CSV</h2><p>CSV berada di <code>Jelajah-In-Progo-WebGIS/data/Data Wisata Kulon Progo.csv</code>. Header yang teramati berisi 16 kolom berikut. Nilai atribut harus dipertahankan sesuai data sumber; dokumentasi tidak menambahkan atau mengoreksi isi dataset.</p>
+        <div class="table-wrap"><table><thead><tr><th>Kolom</th><th>Makna penggunaan</th><th>Tipe yang diharapkan</th></tr></thead><tbody>
+          <tr><td><code>id</code></td><td>Identitas baris/lokasi untuk memilih item</td><td>Identifier</td></tr>
+          <tr><td><code>nama_wisata</code></td><td>Nama destinasi</td><td>Teks</td></tr>
+          <tr><td><code>kategori_wisata</code></td><td>Kategori, dipakai untuk filter dan warna marker</td><td>Teks kategori</td></tr>
+          <tr><td><code>kecamatan</code>, <code>desa</code></td><td>Wilayah administratif pada tampilan</td><td>Teks</td></tr>
+          <tr><td><code>alamat</code></td><td>Alamat untuk pencarian dan informasi lokasi</td><td>Teks</td></tr>
+          <tr><td><code>latitude</code>, <code>longitude</code></td><td>Koordinat marker dan tautan rute</td><td>Angka desimal</td></tr>
+          <tr><td><code>jam_operasional</code></td><td>Jam buka pada tabel, popup, dan detail</td><td>Teks</td></tr>
+          <tr><td><code>tiket_masuk</code></td><td>Informasi tiket pada popup dan detail</td><td>Teks</td></tr>
+          <tr><td><code>toilet</code>, <code>mushola</code>, <code>tempat_makan</code></td><td>Informasi fasilitas</td><td>Teks</td></tr>
+          <tr><td><code>media_sosial</code></td><td>Handle/media sosial destinasi</td><td>Teks</td></tr>
+          <tr><td><code>deskripsi</code></td><td>Deskripsi destinasi dan bahan pencarian</td><td>Teks</td></tr>
+          <tr><td><code>foto</code></td><td>Kolom yang ada pada CSV</td><td>Teks/path atau penanda; pemakaian perlu diverifikasi</td></tr>
+        </tbody></table></div>
+        <div class="callout warning"><b>Perhatikan perbedaan CSV dan kode</b><p>CSV yang diperiksa tidak memiliki kolom <code>kabupaten</code>, sedangkan fungsi detail mencoba membaca <code>item.kabupaten</code> dengan fallback teks “Kulon Progo”. CSV juga memiliki kolom <code>foto</code>, tetapi tidak terlihat dipakai untuk menampilkan foto pada detail. Beberapa baris memiliki nilai yang tidak seragam; validasi CSV/API perlu dilakukan di sisi sumber tanpa mengubah data diam-diam.</p></div>
+        <h3>Kontrak data untuk frontend</h3><p>Frontend mengharapkan <code>/api/wisata</code> mengembalikan array JSON berisi objek dengan nama properti yang cocok dengan kolom CSV, terutama koordinat numerik dan <code>id</code> yang stabil. Contoh bentuk data, bukan pengganti dataset:</p>
+        <pre><code>[
+  {
+    "id": 1,
+    "nama_wisata": "Nama dari CSV",
+    "kategori_wisata": "Wisata Alam",
+    "latitude": -7.64,
+    "longitude": 110.14
+  }
+]</code><button class="copy-btn">Salin</button></pre>
+      </section>
+      <section id="fitur" class="doc-section">
+        <h2>Fitur aplikasi sesuai kode</h2>
+        <h3>Peta interaktif, marker, dan popup</h3><p>Leaflet memulai peta di sekitar koordinat <code>[-7.75, 110.15]</code> pada zoom 11, memakai tile OpenStreetMap, dan membuat <code>circleMarker</code> dari latitude/longitude. Warna marker ditentukan oleh kategori. Klik marker membuka popup dan menyinkronkan panel destinasi terpilih.</p>
+        <h3>Pencarian dan filter kategori</h3><p>Pencarian menguji kata kunci terhadap nama, kategori, kecamatan, desa, alamat, dan deskripsi. Filter kategori dan pencarian diterapkan bersamaan. Daftar hasil pencarian menampilkan hingga delapan item; memilih hasil akan memusatkan peta dan membuka popup jika marker masih tersedia.</p>
+        <h3>Tabel wisata</h3><p>Tabel menampilkan maksimal 12 baris dari hasil yang sedang diberikan ke fungsi render, sementara label hitungan menggunakan jumlah data hasil filter. Tombol pada baris memilih destinasi, menggeser peta ke zoom 15, lalu menggulir halaman ke area peta.</p>
+        <h3>Statistik</h3><p>Statistik menghitung jumlah baris, jumlah kecamatan unik, jumlah kategori unik, dan jumlah titik yang diasumsikan sama dengan jumlah baris. Kode tidak memvalidasi koordinat untuk menghitung ulang jumlah titik valid.</p>
+        <h3>Detail destinasi</h3><p>Panel detail menampilkan nama, wilayah, kategori, deskripsi, jam operasional, tiket, koordinat, media sosial, toilet, mushola, dan tempat makan. Informasi berasal dari objek data terpilih.</p>
+        <h3>Rute Google Maps</h3><p>Tombol rute membuka Google Maps Directions dengan koordinat destinasi sebagai tujuan. Kode tidak menentukan titik awal khusus; Google Maps menangani pemilihan titik awal/rute.</p>
+        <h3>Lokasi pengguna</h3><p>Tombol lokasi memakai <code>navigator.geolocation</code> untuk memusatkan peta ke posisi perangkat pada zoom 13. Browser dapat meminta izin dan umumnya memerlukan HTTPS atau localhost.</p>
+        <h3>Keamanan keluaran</h3><p>Fungsi <code>escapeHtml()</code> meng-escape karakter HTML pada sejumlah nilai sebelum dimasukkan ke template HTML. Pertahankan sanitasi saat mengembangkan fitur berbasis data.</p>
+      </section>
+      <section id="alur" class="doc-section">
+        <h2>Alur pemrosesan data</h2><p>Diagram berikut merangkum alur yang diterapkan frontend. CSV berada di sisi sumber; penghubung CSV ke API merupakan tanggung jawab server yang tidak tercakup oleh kode frontend yang diperiksa.</p>
+        <div class="flow">
+          <div class="flow-node">File CSV<br><small>data sumber</small></div><div class="flow-arrow">↓</div>
+          <div class="flow-node external">Backend / API <code>/api/wisata</code><br><small>harus mengubah/menyajikan data sebagai JSON</small></div><div class="flow-arrow">↓</div>
+          <div class="flow-node">fetch() → <code>allData</code><br><small>validasi respons dan data tidak kosong</small></div><div class="flow-arrow">↓</div>
+          <div class="flow-split"><div class="flow-node">Statistik & kategori</div><div class="flow-node">Tabel wisata</div><div class="flow-node">Marker & popup</div></div>
+          <div class="flow-arrow">↓</div><div class="flow-node">Pencarian / filter → render ulang<br><small>pilih destinasi → panel detail & rute</small></div>
+        </div>
+        <p class="muted-note">Jika fetch gagal atau respons bukan JSON, proses masuk ke blok <code>catch</code> dan pesan kesalahan ditampilkan di area tabel.</p>
+      </section>
+      <section id="troubleshooting" class="doc-section">
+        <h2>Troubleshooting</h2>
+        <div class="table-wrap"><table><thead><tr><th>Gejala</th><th>Penyebab yang perlu dicek</th><th>Solusi</th></tr></thead><tbody>
+          <tr><td>“Server tidak dapat membaca CSV”</td><td>Respons endpoint tidak sukses (status bukan 2xx).</td><td>Pastikan server/API berjalan dan path <code>/api/wisata</code> benar.</td></tr>
+          <tr><td><code>Unexpected token ... is not valid JSON</code></td><td>Endpoint mengembalikan CSV/HTML, bukan JSON.</td><td>Periksa tab Network dan kontrak respons API; jangan panggil <code>response.json()</code> pada CSV mentah.</td></tr>
+          <tr><td>Peta tampil tetapi data kosong</td><td>API gagal, array kosong, properti tidak cocok, atau koordinat bukan angka.</td><td>Periksa respons JSON dan nama properti <code>latitude</code>/<code>longitude</code>.</td></tr>
+          <tr><td>404 untuk CSV</td><td>Path relatif atau kapitalisasi/nama file keliru.</td><td>Verifikasi lokasi file dan URL yang diminta. Kode saat ini meminta API, bukan path CSV.</td></tr>
+          <tr><td>Lokasi pengguna tidak muncul</td><td>Izin ditolak, lokasi perangkat mati, atau konteks bukan secure.</td><td>Izinkan lokasi dan coba HTTPS/localhost.</td></tr>
+          <tr><td>Ikon/peta dasar tidak muncul</td><td>CDN atau tile server tidak dapat dijangkau.</td><td>Periksa koneksi dan Console/Network; pastikan atribusi OpenStreetMap tetap ada.</td></tr>
+          <tr><td>Hasil tabel terbatas</td><td><code>renderTable()</code> memakai <code>slice(0, 12)</code>.</td><td>Ubah batas secara sadar jika kebutuhan produk mengharuskan lebih banyak baris.</td></tr>
+        </tbody></table></div>
+        <h3>Checklist debug cepat</h3><ol><li>Buka DevTools → Console untuk pesan JavaScript.</li><li>Buka Network → muat ulang → periksa permintaan <code>/api/wisata</code>, status, dan response body.</li><li>Pastikan response berbentuk array JSON dan kolom penting konsisten.</li><li>Uji koordinat numerik serta nilai kategori yang dipakai filter.</li><li>Pastikan akses CDN tidak diblokir.</li></ol>
+      </section>
+      <section id="deployment" class="doc-section">
+        <h2>Deployment & publikasi</h2>
+        <h3>Publikasikan dokumentasi melalui GitHub Pages</h3><ol>
+          <li>Commit folder <code>docs-site/</code> ke branch repository, tanpa mengganti file WebGIS utama.</li>
+          <li>Buka repository GitHub → <b>Settings</b> → <b>Pages</b>.</li>
+          <li>Pada bagian Build and deployment, pilih <b>Deploy from a branch</b>.</li>
+          <li>Pilih branch yang memuat perubahan dan folder <b>/(root)</b>, lalu simpan. Jika Pages repository sudah memakai sumber deployment lain, jangan mengubahnya tanpa memahami situs yang sudah terbit.</li>
+          <li>Setelah workflow Pages selesai, buka URL Pages repository lalu tambahkan <code>/docs-site/</code> di akhir path.</li>
+        </ol>
+        <div class="callout info"><b>Alternatif yang lebih rapi</b><p>Jika ingin URL dokumentasi menjadi root situs Pages, pindahkan isi folder dokumentasi ke folder <code>docs/</code> lalu atur Pages untuk menerbitkan folder <code>/docs</code>, atau gunakan repository terpisah. Periksa konfigurasi Pages yang sekarang sebelum memilih opsi.</p></div>
+        <h3>Publikasi aplikasi WebGIS berbeda dengan dokumentasi</h3><p>GitHub Pages melayani file statis. Karena frontend yang diperiksa meminta <code>/api/wisata</code>, aplikasi lengkap tidak akan berfungsi di Pages kecuali data/API disediakan dengan cara yang kompatibel dengan hosting statis atau backend dideploy ke layanan yang mendukungnya. Jangan menganggap publikasi dokumentasi berarti API aplikasi ikut terpublikasi.</p>
+        <h3>Checklist sebelum rilis</h3><ul><li>Semua link navigasi internal menuju ID section yang tersedia.</li><li>File CSS/JS menggunakan path relatif.</li><li>Uji tampilan desktop dan ponsel.</li><li>Pastikan repository Pages memakai branch/folder yang benar.</li><li>Uji URL produksi dan buka Console/Network untuk memeriksa error.</li></ul>
+      </section>
+      <footer class="doc-footer"><span>Jelajah-In Progo · Dokumentasi teknis</span><a href="#overview">Kembali ke atas ↑</a></footer>
+    </article>
+    <aside class="toc"><b>DI HALAMAN INI</b><nav id="tocNav"><a href="#overview">Overview</a><a href="#getting-started">Getting Started</a><a href="#struktur">Struktur proyek</a><a href="#kode">Memahami kode</a><a href="#data">Sumber data CSV</a><a href="#fitur">Fitur aplikasi</a><a href="#alur">Alur pemrosesan</a><a href="#troubleshooting">Troubleshooting</a><a href="#deployment">Deployment</a></nav><div class="toc-note">Dibuat dari file frontend dan header CSV yang dapat diverifikasi.</div></aside>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
