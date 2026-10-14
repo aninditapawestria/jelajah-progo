@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jelajah-In Progo | Documentation</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: #303846;
+      line-height: 1.7;
+    }
+    a { color: #2877cf; text-decoration: none; }
+    .topbar {
+      height: 62px;
+      background: #fff;
+      border-bottom: 1px solid #e5e7eb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      position: sticky;
+      top: 0;
+    }
+    .brand { font-size: 19px; font-weight: bold; }
+    .toplinks { display: flex; gap: 20px; }
+    .layout {
+      display: grid;
+      grid-template-columns: 220px minmax(0, 760px) 170px;
+      gap: 32px;
+      max-width: 1300px;
+      margin: auto;
+      padding: 28px 24px;
+    }
+    aside { font-size: 14px; }
+    .sidebar {
+      position: sticky;
+      top: 85px;
+      align-self: start;
+    }
+    .sidebar a { display: block; padding: 5px 0; color: #505967; }
+    .sidebar a:hover { color: #2877cf; }
+    .label {
+      font-size: 11px;
+      font-weight: bold;
+      color: #87909d;
+      letter-spacing: 1px;
+      margin: 18px 0 6px;
+    }
+    main { min-width: 0; }
+    h1 { font-size: 34px; line-height: 1.25; }
+    h2 {
+      font-size: 25px;
+      border-bottom: 1px solid #e5e7eb;
+      padding-bottom: 8px;
+      margin-top: 38px;
+    }
+    h3 { margin-top: 25px; }
+    .lead { font-size: 17px; color: #626d7c; }
+    .note {
+      background: #f0f6ff;
+      border-left: 4px solid #4388e5;
+      padding: 12px 16px;
+      margin: 20px 0;
+    }
+    pre {
+      background: #f5f6f8;
+      padding: 16px;
+      overflow-x: auto;
+      border-radius: 6px;
+      font-size: 13px;
+    }
+    code { font-family: Consolas, monospace; }
+    .toc { position: sticky; top: 90px; }
+    .toc a { display: block; font-size: 13px; margin: 8px 0; }
+    .footer {
+      border-top: 1px solid #e5e7eb;
+      margin-top: 45px;
+      padding-top: 18px;
+      color: #77808c;
+      font-size: 13px;
+    }
+    @media (max-width: 950px) {
+      .layout { grid-template-columns: 190px minmax(0, 1fr); }
+      .toc { display: none; }
+    }
+    @media (max-width: 600px) {
+      .layout { display: block; padding: 20px; }
+      .sidebar { position: static; margin-bottom: 30px; }
+      .topbar { padding: 0 18px; }
+      .toplinks { gap: 12px; font-size: 13px; }
+      h1 { font-size: 29px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#overview">Jelajah-In Progo</a>
+    <nav class="toplinks">
+      <a href="#overview">Docs</a>
+      <a href="../">Website</a>
+      <a href="https://github.com/aninditapawestria/jelajah-progo">GitHub</a>
+    </nav>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="label">DOKUMENTASI</div>
+      <a href="#overview">Overview</a>
+      <a href="#installation">Installation</a>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#configuration">Configuration</a>
+      <a href="#structure">Project Structure</a>
+      <a href="#usage">Usage Guide</a>
+      <a href="#data">Data & Sources</a>
+      <a href="#developer">Developer</a>
+    </aside>
+
+    <main>
+      <section id="overview">
+        <h1>Jelajah-In Progo</h1>
+        <p class="lead">Dokumentasi WebGIS Pariwisata Kabupaten Kulon Progo.</p>
+        <p>
+          Jelajah-In Progo merupakan aplikasi WebGIS yang menyajikan
+          informasi dan persebaran destinasi wisata secara spasial.
+          Dokumentasi ini menjelaskan struktur proyek, persiapan,
+          serta cara menggunakan aplikasi.
+        </p>
+        <div class="note">
+          <strong>Website:</strong>
+          <a href="https://aninditapawestria.github.io/jelajah-progo/">
+            Buka Jelajah-In Progo
+          </a>
+        </div>
+      </section>
+
+      <section id="installation">
+        <h2>Installation</h2>
+        <p>
+          Untuk mempelajari atau mengembangkan proyek, siapkan browser
+          modern dan editor kode seperti Visual Studio Code.
+        </p>
+        <ol>
+          <li>Buka repository proyek di GitHub.</li>
+          <li>Pilih Code, lalu Download ZIP.</li>
+          <li>Ekstrak file proyek ke komputer.</li>
+          <li>Buka folder proyek menggunakan editor kode.</li>
+        </ol>
+        <p>
+          Jika ingin mengembangkan proyek secara lokal, periksa
+          kebutuhan library dan sumber data pada file program.
+        </p>
+      </section>
+
+      <section id="quick-start">
+        <h2>Quick Start</h2>
+        <p>Cara paling cepat mengakses aplikasi adalah membuka tautan berikut:</p>
+        <pre><code>https://aninditapawestria.github.io/jelajah-progo/</code></pre>
+        <p>
+          Tunggu hingga halaman selesai dimuat, kemudian gunakan menu
+          yang tersedia untuk menjelajahi informasi wisata.
+        </p>
+      </section>
+
+      <section id="configuration">
+        <h2>Configuration</h2>
+        <p>
+          Konfigurasi aplikasi mengikuti struktur HTML, CSS, JavaScript,
+          serta data yang digunakan oleh proyek. Periksa referensi file
+          pada kode sebelum mengubah lokasi atau format data.
+        </p>
+        <pre><code>index.html
+style.css
+script.js
+File data CSV</code></pre>
+        <p>
+          Nama file dan lokasi sumber data harus disesuaikan dengan
+          isi repository yang sebenarnya.
+        </p>
+      </section>
+
+      <section id="structure">
+        <h2>Project Structure</h2>
+        <ul>
+          <li><code>index.html</code> — struktur halaman utama.</li>
+          <li><code>style.css</code> — aturan tampilan halaman.</li>
+          <li><code>script.js</code> — logika dan interaksi aplikasi.</li>
+          <li><code>README.md</code> — dokumentasi ringkas proyek.</li>
+          <li><code>docs/index.html</code> — halaman dokumentasi teknis.</li>
+          <li>File CSV — data destinasi wisata jika digunakan oleh aplikasi.</li>
+        </ul>
+      </section>
+
+      <section id="usage">
+        <h2>Usage Guide</h2>
+        <ol>
+          <li>Buka halaman utama Jelajah-In Progo.</li>
+          <li>Pilih menu peta untuk melihat persebaran destinasi wisata.</li>
+          <li>Jelajahi informasi destinasi yang disediakan aplikasi.</li>
+          <li>Gunakan menu navigasi untuk berpindah halaman.</li>
+        </ol>
+        <p>
+          Detail interaksi dan informasi yang tersedia mengikuti
+          implementasi website.
+        </p>
+      </section>
+
+      <section id="data">
+        <h2>Data & Sources</h2>
+        <p>
+          Bagian ini digunakan untuk mendokumentasikan sumber data,
+          format atribut, dan metode pemuatan data destinasi wisata.
+          Lengkapi berdasarkan sumber data yang benar-benar digunakan
+          dalam proyek.
+        </p>
+      </section>
+
+      <section id="developer">
+        <h2>Developer</h2>
+        <p><strong>Nama:</strong> Pawestria Anindita Jene</p>
+        <p><strong>Proyek:</strong> Jelajah-In Progo</p>
+        <p><strong>Platform:</strong> GitHub Pages</p>
+      </section>
+
+      <div class="footer">
+        Dokumentasi Jelajah-In Progo · WebGIS Pariwisata Kulon Progo
+      </div>
+    </main>
+
+    <aside class="toc">
+      <div class="label">ON THIS PAGE</div>
+      <a href="#overview">Overview</a>
+      <a href="#installation">Installation</a>
+      <a href="#quick-start">Quick Start</a>
+      <a href="#configuration">Configuration</a>
+      <a href="#structure">Project Structure</a>
+      <a href="#usage">Usage Guide</a>
+    </aside>
+  </div>
+</body>
+</html>
